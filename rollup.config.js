@@ -1,4 +1,4 @@
-import pkg from './package.json';
+import pkg from './package.json' with { type: "json" };
 
 export default {
   input: 'dist/index.js',
@@ -8,11 +8,11 @@ export default {
   output: [
     {
       format: 'cjs',
-      file: pkg.main,
+      file: pkg.exports['.']?.require,
     },
     {
       format: 'es',
-      file: pkg.module,
+      file: pkg.exports['.']?.import,
     },
   ],
 };
