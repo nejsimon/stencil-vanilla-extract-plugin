@@ -49,6 +49,7 @@ function vanillaExtractRollupPlugin({
         filePath,
         cwd,
         esbuildOptions,
+        identOption: identifiers ?? (isProduction ? "short" : "debug"),
       });
 
       for (const file of watchFiles) {
@@ -113,7 +114,7 @@ function vanillaExtractRollupPlugin({
       }, code);
       return {
         code: output,
-        map: chunkInfo.map ?? null,
+        map: null,
       };
     },
   };

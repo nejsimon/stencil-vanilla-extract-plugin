@@ -42,6 +42,7 @@ export function vanillaExtractPlugin({
         filePath,
         cwd,
         esbuildOptions,
+        identOption: identifiers ?? (isProduction ? "short" : "debug"),
       });
 
       for (const file of watchFiles) {
@@ -102,7 +103,7 @@ export function vanillaExtractPlugin({
       }, code);
       return {
         code: output,
-        map: chunkInfo.map ?? null,
+        map: null
       };
     },
   };
