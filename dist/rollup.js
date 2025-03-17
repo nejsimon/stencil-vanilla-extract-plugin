@@ -19,6 +19,7 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuild
                 filePath,
                 cwd,
                 esbuildOptions,
+                identOption: identifiers !== null && identifiers !== void 0 ? identifiers : (isProduction ? "short" : "debug"),
             });
             for (const file of watchFiles) {
                 this.addWatchFile(file);
@@ -54,7 +55,6 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuild
             };
         },
         renderChunk(code, chunkInfo) {
-            var _a;
             // For all imports in this chunk that we have emitted files for...
             const importsToReplace = chunkInfo.imports.filter((fileName) => emittedFiles.get(fileName));
             if (!importsToReplace.length) {
@@ -70,7 +70,7 @@ export function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuild
             }, code);
             return {
                 code: output,
-                map: (_a = chunkInfo.map) !== null && _a !== void 0 ? _a : null,
+                map: null
             };
         },
     };

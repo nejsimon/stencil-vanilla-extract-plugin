@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 var rollup = require('rollup');
 var integration = require('@vanilla-extract/integration');
 var path = require('path');
@@ -31,6 +29,7 @@ function vanillaExtractRollupPlugin({ identifiers, cwd = process.cwd(), esbuildO
                 filePath,
                 cwd,
                 esbuildOptions,
+                identOption: identifiers !== null && identifiers !== void 0 ? identifiers : (isProduction ? "short" : "debug"),
             });
             for (const file of watchFiles) {
                 this.addWatchFile(file);
@@ -71,7 +70,6 @@ function vanillaExtractRollupPlugin({ identifiers, cwd = process.cwd(), esbuildO
             };
         },
         renderChunk(code, chunkInfo) {
-            var _a;
             const importsToReplace = chunkInfo.imports.filter((fileName) => emittedFiles.get(fileName));
             if (!importsToReplace.length) {
                 return null;
@@ -85,7 +83,7 @@ function vanillaExtractRollupPlugin({ identifiers, cwd = process.cwd(), esbuildO
             }, code);
             return {
                 code: output,
-                map: (_a = chunkInfo.map) !== null && _a !== void 0 ? _a : null,
+                map: null,
             };
         },
     };
@@ -167,6 +165,7 @@ function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuildOptions
                 filePath,
                 cwd,
                 esbuildOptions,
+                identOption: identifiers !== null && identifiers !== void 0 ? identifiers : (isProduction ? "short" : "debug"),
             });
             for (const file of watchFiles) {
                 this.addWatchFile(file);
@@ -202,7 +201,6 @@ function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuildOptions
             };
         },
         renderChunk(code, chunkInfo) {
-            var _a;
             // For all imports in this chunk that we have emitted files for...
             const importsToReplace = chunkInfo.imports.filter((fileName) => emittedFiles.get(fileName));
             if (!importsToReplace.length) {
@@ -218,7 +216,7 @@ function vanillaExtractPlugin({ identifiers, cwd = process.cwd(), esbuildOptions
             }, code);
             return {
                 code: output,
-                map: (_a = chunkInfo.map) !== null && _a !== void 0 ? _a : null,
+                map: null
             };
         },
     };
